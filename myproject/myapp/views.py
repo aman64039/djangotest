@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse
+from .models import Student
 # Create your views here.
 
 
@@ -10,3 +11,33 @@ def aman(request):
 
 def home(request):
     return render(request , "myapp/aman.html" )
+
+def create(request):
+    if request.method == "POST":
+        name = request.POST["name"]
+        course = request.POST["course"]
+        std = Student(name = name , course = course)
+        std.save()
+        return redirect("/")
+
+    return render(request , "myapp/create.html" )
+
+
+def getdetails(request):
+    data = Student.objects.filter(is_deleted = 0)
+    return render(request , "myapp/getdetails.html" , {'data':data , "name":"Aman"} )
+
+def update(request , id):
+    std1 = Student.objects.filter(id = id)
+    print("Filter  Result ", std1)
+    print("\n\n")
+    std = Student.objects.get(id = id)
+    print("Get Result ", std)
+
+    if request.method == "POST":
+        std.name = request.POST["name"]
+        std.course = request.POST["course"]
+        std.save()
+        return redirect("/getdetails")
+
+    return render(request , "myapp/update.html" , {"data":std})

@@ -18,6 +18,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('',views.home ),
-    path('aman/',views.aman ),
+    path('',views.home , name = "home"),
+    path('create/',views.create ),
+    path('getdetails/',views.getdetails ),
+    path('update/<int:id>',views.update ),
 ]
