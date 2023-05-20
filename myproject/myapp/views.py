@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from .models import Student
+from .models import Student , Course
 # Create your views here.
 
 
@@ -16,11 +16,15 @@ def create(request):
     if request.method == "POST":
         name = request.POST["name"]
         course = request.POST["course"]
+        courseid = int(course.split('_')[-1])
+        course = Course.objects.get(id=courseid)
+        
         std = Student(name = name , course = course)
         std.save()
         return redirect("/")
+    courses = Course.objects.all()
 
-    return render(request , "myapp/create.html" )
+    return render(request , "myapp/create.html"  , {'courses':courses})
 
 
 def getdetails(request):

@@ -33,7 +33,7 @@ tr:nth-child(even) {
   {% for i in data %}
     <tr>
       <td>{{i.name}}</td>
-      <td>{{i.course}}</td>
+      <td>{{i.course.course}}</td>
       <td><a href="/update/{{i.id}}">Edit</a> / <a href="/delete">Delete</a></td>
     </tr>
   {% endfor %}
